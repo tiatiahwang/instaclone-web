@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { isLoggedInVar } from '../apollo';
+import { LoginMutation } from '../graphql/generated';
 
 const Container = styled.div``;
 
