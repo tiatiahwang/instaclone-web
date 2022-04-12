@@ -7,6 +7,7 @@ import FormBox from '../components/auth/FormBox';
 import Input from '../components/auth/Input';
 import Seperator from '../components/auth/Seperator';
 import BottomBox from '../components/auth/ButtonBox';
+import PageTitle from '../components/PageTitle';
 
 const Notification = styled.div`
   color: #2ecc71;
@@ -23,6 +24,7 @@ const GithubLogin = styled.div`
 const Login = () => {
   return (
     <AuthLayout>
+      <PageTitle title="로그인" />
       <FormBox>
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
