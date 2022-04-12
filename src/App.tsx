@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import Home from './screens/Home';
 import Login from './screens/Login';
 import NotFound from './screens/NotFound';
-import { isDarkModeVar, isLoggedInVar } from './apollo';
+import { isDarkModeVar, isLoggedInVar } from './apollo/vars';
 import { darkTheme, lightTheme } from './styles/theme';
 import GlobalStyles from './styles/GlobalStyles';
 

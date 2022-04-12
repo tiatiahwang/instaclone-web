@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { isLoggedInVar } from '../apollo';
+import { isLoggedInVar } from '../apollo/vars';
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.bgColor};
