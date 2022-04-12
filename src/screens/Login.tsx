@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 import { faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthLayout from '../components/auth/AuthLayout';
@@ -31,7 +32,16 @@ interface IForm {
   result?: string;
 }
 
+interface ILocation {
+  state: {
+    username: string;
+    password: string;
+    message: string;
+  };
+}
+
 const Login = () => {
+  const { state } = useLocation() as ILocation;
   const {
     register,
     handleSubmit,
@@ -40,6 +50,10 @@ const Login = () => {
     clearErrors,
   } = useForm<IForm>({
     mode: 'onChange',
+    defaultValues: {
+      username: state?.username || '',
+      password: state?.password || '',
+    },
   });
   const onCompleted = (data: LoginMutation) => {
     const {
@@ -68,7 +82,7 @@ const Login = () => {
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
-        <Notification></Notification>
+        <Notification>{state?.message}</Notification>
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <Input
             {...register('username', {
