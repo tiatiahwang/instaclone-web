@@ -3,6 +3,7 @@ import styled from 'styled-components';
 // import sanitizeHtml from 'sanitize-html';
 import { FatText } from '../shared';
 import { Link } from 'react-router-dom';
+import { useDeleteCommentMutation } from '../../graphql/generated';
 
 const CommentContainer = styled.div`
   margin-bottom: 7px;
@@ -21,16 +22,32 @@ const CommentCaption = styled.span`
 `;
 
 interface Props {
+  photoId?: number | undefined;
+  commentId?: number;
   username: string | undefined;
   payload: string | null | undefined;
+  isMine?: boolean | undefined;
 }
 
-const Comment = ({ username, payload }: Props) => {
+const Comment = ({ photoId, commentId, username, payload, isMine }: Props) => {
   //   const cleanedPayload = sanitizeHtml(
   //     payload?.replace(/#[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\w]+/g, '<mark>$&</mark>')!,
   //     { allowedTags: ['mark'] },
   //   );
-
+  const [deleteComment, { loading }] = useDeleteCommentMutation({
+    update: (cache, { data }) => {
+      if (!isMine || !data?.deleteComment?.ok) return;
+      cache.modify({
+        id: `Photo:${photoId}`,
+        fields: { commentNumber: (prev) => prev - 1 },
+      });
+      cache.evict({ id: `Comment:${commentId}` });
+    },
+  });
+  const onDelete = () => {
+    if (loading) return;
+    deleteComment({ variables: { id: commentId! } });
+  };
   return (
     <CommentContainer>
       <FatText>{username}</FatText>
@@ -50,6 +67,7 @@ const Comment = ({ username, payload }: Props) => {
           ),
         )}
       </CommentCaption>
+      {isMine && <button onClick={onDelete}>❌</button>}
     </CommentContainer>
   );
 };

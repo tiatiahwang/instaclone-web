@@ -39,3 +39,10 @@ mutation createComment($photoId: Int!, $payload: String!) {
     error
   }
 }
+
+mutation deleteComment($id: Int!) {
+  deleteComment(id: $id) {
+    ok
+    error
+  }
+}

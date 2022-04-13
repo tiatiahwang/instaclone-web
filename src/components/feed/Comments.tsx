@@ -108,8 +108,11 @@ const Comments = ({ photo }: Props) => {
       {photo?.comments?.map((comment) => (
         <Comment
           key={comment?.id}
+          photoId={photo?.id}
+          commentId={comment?.id}
           username={comment?.user.username}
           payload={comment?.payload}
+          isMine={comment?.isMine}
         />
       ))}
       <PostCommentContainer>
