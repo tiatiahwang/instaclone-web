@@ -168,6 +168,7 @@ export type Photo = {
   file: Scalars['String'];
   hashtags?: Maybe<Array<Maybe<Hashtag>>>;
   id: Scalars['Int'];
+  isLiked: Scalars['Boolean'];
   isMine: Scalars['Boolean'];
   likes: Scalars['Int'];
   updatedAt: Scalars['String'];
@@ -298,7 +299,7 @@ export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', userna
 export type SeeFeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SeeFeedQuery = { __typename?: 'Query', seeFeed?: Array<{ __typename?: 'Photo', id: number, file: string, caption?: string | null, comments: number, createdAt: string, isMine: boolean, likes: number, user: { __typename?: 'User', username: string, avatar?: string | null } } | null> | null };
+export type SeeFeedQuery = { __typename?: 'Query', seeFeed?: Array<{ __typename?: 'Photo', id: number, file: string, caption?: string | null, likes: number, comments: number, createdAt: string, isMine: boolean, isLiked: boolean, user: { __typename?: 'User', username: string, avatar?: string | null } } | null> | null };
 
 
 export const LoginDocument = gql`
@@ -426,10 +427,11 @@ export const SeeFeedDocument = gql`
     }
     file
     caption
+    likes
     comments
     createdAt
     isMine
-    likes
+    isLiked
   }
 }
     `;

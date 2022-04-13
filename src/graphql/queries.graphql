@@ -14,9 +14,10 @@ query seeFeed {
     }
     file
     caption
+    likes
     comments
     createdAt
     isMine
-    likes
+    isLiked
   }
 }
