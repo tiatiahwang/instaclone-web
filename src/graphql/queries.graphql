@@ -4,3 +4,19 @@ query me {
     avatar
   }
 }
+
+query seeFeed {
+  seeFeed {
+    id
+    user {
+      username
+      avatar
+    }
+    file
+    caption
+    comments
+    createdAt
+    isMine
+    likes
+  }
+}
