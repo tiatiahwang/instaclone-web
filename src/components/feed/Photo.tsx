@@ -12,6 +12,7 @@ import { gql } from '@apollo/client';
 import Avatar from '../Avatar';
 import { FatText } from '../shared';
 import { SeeFeedQuery, useToggleLikeMutation } from '../../graphql/generated';
+import Comments from './Comments';
 
 const PhotoContainer = styled.div`
   max-width: 615px;
@@ -136,6 +137,7 @@ const Photo = ({ photo }: Props) => {
             ? '1 like'
             : `${photo?.likes} likes`}
         </Likes>
+        <Comments photo={photo} />
       </PhotoData>
     </PhotoContainer>
   );
