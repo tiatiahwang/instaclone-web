@@ -68,7 +68,20 @@ interface Props {
 }
 
 const Photo = ({ photo }: Props) => {
-  const [toggleLikeMutation] = useToggleLikeMutation();
+  const [toggleLikeMutation] = useToggleLikeMutation({
+    variables: { id: photo?.id! },
+    update: (cache, { data }) => {
+      if (!data?.toggleLike.ok) return;
+      const id = `Photo:${photo?.id!}`;
+      cache.modify({
+        id,
+        fields: {
+          isLiked: (prev) => !prev,
+          likes: (prev) => (photo && !photo.isLiked ? prev + 1 : prev - 1),
+        },
+      });
+    },
+  });
   return (
     <PhotoContainer key={photo?.id}>
       <PhotoHeader>
