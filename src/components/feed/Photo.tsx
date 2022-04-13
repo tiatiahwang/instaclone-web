@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import {
   faBookmark,
   faComment,
@@ -7,6 +8,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as SolidHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { gql } from '@apollo/client';
 import Avatar from '../Avatar';
 import { FatText } from '../shared';
 import { SeeFeedQuery, useToggleLikeMutation } from '../../graphql/generated';
@@ -73,11 +75,23 @@ const Photo = ({ photo }: Props) => {
     update: (cache, { data }) => {
       if (!data?.toggleLike.ok) return;
       const id = `Photo:${photo?.id!}`;
-      cache.modify({
+      const fragment = gql`
+        fragment Photo on Photo {
+          isLiked
+          likes
+        }
+      `;
+      const result = cache.readFragment<{ isLiked: boolean; likes: number }>({
         id,
-        fields: {
-          isLiked: (prev) => !prev,
-          likes: (prev) => (photo && !photo.isLiked ? prev + 1 : prev - 1),
+        fragment,
+      });
+      if (!result) return;
+      cache.writeFragment({
+        id,
+        fragment,
+        data: {
+          isLiked: !result.isLiked,
+          likes: result.isLiked ? result.likes - 1 : result.likes + 1,
         },
       });
     },
