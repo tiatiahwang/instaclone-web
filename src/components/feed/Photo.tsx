@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import {
   faBookmark,
   faComment,
@@ -86,8 +87,12 @@ const Photo = ({ photo }: Props) => {
   return (
     <PhotoContainer key={photo?.id}>
       <PhotoHeader>
-        <Avatar size="lg" url={photo?.user?.avatar} />
-        <Username>{photo?.user?.username}</Username>
+        <Link to={`/users/${photo?.user?.username}`}>
+          <Avatar size="lg" url={photo?.user?.avatar} />
+        </Link>
+        <Link to={`/users/${photo?.user?.username}`}>
+          <Username>{photo?.user?.username}</Username>
+        </Link>
       </PhotoHeader>
       <PhotoFile>
         <img src={photo?.file} alt="" />

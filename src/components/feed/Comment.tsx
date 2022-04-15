@@ -50,7 +50,9 @@ const Comment = ({ photoId, commentId, username, payload, isMine }: Props) => {
   };
   return (
     <CommentContainer>
-      <FatText>{username}</FatText>
+      <Link to={`/users/${username}`}>
+        <FatText>{username}</FatText>
+      </Link>
       {/* <CommentCaption
         dangerouslySetInnerHTML={{
           __html: cleanedPayload,
