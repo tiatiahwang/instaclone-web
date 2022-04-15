@@ -7,27 +7,34 @@ query me {
 
 query seeFeed {
   seeFeed {
-    id
+    ...PhotoFragment
     user {
       username
       avatar
     }
-    file
     caption
-    likes
-    commentNumber
     comments {
-      id
-      payload
-      isMine
-      createdAt
-      user {
-        username
-        avatar
-      }
+      ...CommentFragment
     }
     createdAt
     isMine
     isLiked
+  }
+}
+
+query seeProfile($username: String!) {
+  seeProfile(username: $username) {
+    firstName
+    lastName
+    username
+    bio
+    avatar
+    photos {
+      ...PhotoFragment
+    }
+    totalFollowing
+    totalFollowers
+    isMe
+    isFollowing
   }
 }
