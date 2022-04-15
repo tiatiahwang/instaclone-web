@@ -13,5 +13,10 @@ const authLink = setContext((_, { headers }) => ({
 
 export const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  // InMemoryCache를 이용해서 스키마에 각각의 type에 대한 캐시 ID를 생성하는 방법을 커스터마이징
+  cache: new InMemoryCache({
+    typePolicies: {
+      User: { keyFields: (obj) => `User:${obj.username}` },
+    },
+  }),
 });
