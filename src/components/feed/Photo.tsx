@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import {
   faBookmark,
   faComment,
@@ -8,7 +7,6 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as SolidHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { gql } from '@apollo/client';
 import Avatar from '../Avatar';
 import { FatText } from '../shared';
 import { SeeFeedQuery, useToggleLikeMutation } from '../../graphql/generated';
