@@ -36,7 +36,14 @@ function App() {
             {!isLoggedIn ? (
               <Route path="/sign-up" element={<Signup />} />
             ) : null}
-            <Route path="/users/:username" element={<Profile />} />
+            <Route
+              path="/users/:username"
+              element={
+                <Layout>
+                  <Profile />
+                </Layout>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
