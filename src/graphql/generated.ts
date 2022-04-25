@@ -205,6 +205,11 @@ export type QuerySearchUsersArgs = {
 };
 
 
+export type QuerySeeFeedArgs = {
+  offset: Scalars['Int'];
+};
+
+
 export type QuerySeeFollowersArgs = {
   page: Scalars['Int'];
   username: Scalars['String'];
@@ -324,7 +329,9 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', username: string, avatar?: string | null } | null };
 
-export type SeeFeedQueryVariables = Exact<{ [key: string]: never; }>;
+export type SeeFeedQueryVariables = Exact<{
+  offset: Scalars['Int'];
+}>;
 
 
 export type SeeFeedQuery = { __typename?: 'Query', seeFeed?: Array<{ __typename?: 'Photo', caption?: string | null, createdAt: string, isMine: boolean, isLiked: boolean, id: number, file: string, likes: number, commentNumber: number, user: { __typename?: 'User', username: string, avatar?: string | null }, comments?: Array<{ __typename?: 'Comment', id: number, payload: string, isMine: boolean, createdAt: string, user: { __typename?: 'User', username: string, avatar?: string | null } } | null> | null } | null> | null };
@@ -577,8 +584,8 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const SeeFeedDocument = gql`
-    query seeFeed {
-  seeFeed {
+    query seeFeed($offset: Int!) {
+  seeFeed(offset: $offset) {
     ...PhotoFragment
     user {
       username
@@ -608,10 +615,11 @@ ${CommentFragmentFragmentDoc}`;
  * @example
  * const { data, loading, error } = useSeeFeedQuery({
  *   variables: {
+ *      offset: // value for 'offset'
  *   },
  * });
  */
-export function useSeeFeedQuery(baseOptions?: Apollo.QueryHookOptions<SeeFeedQuery, SeeFeedQueryVariables>) {
+export function useSeeFeedQuery(baseOptions: Apollo.QueryHookOptions<SeeFeedQuery, SeeFeedQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<SeeFeedQuery, SeeFeedQueryVariables>(SeeFeedDocument, options);
       }
